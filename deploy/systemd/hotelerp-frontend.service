@@ -12,7 +12,7 @@ Environment=HOSTNAME=0.0.0.0
 Environment=DJANGO_API_URL=http://127.0.0.1:116
 Environment=NEXT_PUBLIC_API_URL=/api
 Environment=NEXT_PUBLIC_PLATFORM_ROOT_DOMAIN=sascorporationbd.com
-ExecStart=/usr/bin/npm run start -- -p 117 -H 0.0.0.0
+ExecStart=/usr/bin/node /home/sas/HotelERP/frontend/server-prod.js
 Restart=always
 RestartSec=3
 StandardOutput=append:/home/sas/HotelERP/frontend.log

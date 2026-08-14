@@ -1,0 +1,19 @@
+[Unit]
+Description=HotelERP Django API :116
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/sas/HotelERP/backend
+Environment=HOME=/home/sas
+ExecStart=/bin/bash -lc 'set -a; [ -f /home/sas/HotelERP/backend/.env ] && source /home/sas/HotelERP/backend/.env; set +a; exec /home/sas/HotelERP/backend/.venv/bin/gunicorn hotel_erp.wsgi:application --bind 127.0.0.1:116 --workers 2 --timeout 120 --pid /home/sas/HotelERP/backend/gunicorn.pid'
+Restart=always
+RestartSec=5
+KillSignal=SIGTERM
+TimeoutStopSec=35
+StandardOutput=append:/home/sas/HotelERP/backend.log
+StandardError=append:/home/sas/HotelERP/backend.log
+
+[Install]
+WantedBy=default.target

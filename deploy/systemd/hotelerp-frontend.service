@@ -1,0 +1,22 @@
+[Unit]
+Description=HotelERP Next.js :117
+After=network-online.target hotelerp-backend.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/sas/HotelERP/frontend
+Environment=NODE_ENV=production
+Environment=PORT=117
+Environment=HOSTNAME=0.0.0.0
+Environment=DJANGO_API_URL=http://127.0.0.1:116
+Environment=NEXT_PUBLIC_API_URL=/api
+Environment=NEXT_PUBLIC_PLATFORM_ROOT_DOMAIN=sascorporationbd.com
+ExecStart=/usr/bin/npm run start -- -p 117 -H 0.0.0.0
+Restart=always
+RestartSec=3
+StandardOutput=append:/home/sas/HotelERP/frontend.log
+StandardError=append:/home/sas/HotelERP/frontend.log
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f0f2f5;
+  --foreground: #2c3e50;
+  --gy-vacant: #28a745;
+  --gy-occupied: #dc3545;
+  --gy-reserved: #007bff;
+  --gy-arrival: #ffc107;
+  --gy-departure: #17a2b8;
+  --gy-dirty: #ff6b81;
+  --gy-clean: #1abc9c;
+  --gy-cleaning: #f1c40f;
+  --gy-maintenance: #95a5a6;
+  --gy-revenue: #28a745;
+  --gy-collection: #e83e8c;
+  --gy-adr: #007bff;
+  --gy-chart: #6c5ce7;
+  --gy-sidebar: #2c3e50;
+}
+
+body {
+  color: var(--foreground);
+  background-color: #f0f2f5 !important;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+html.sidebar-hidden .ml-64 {
+  margin-left: 0 !important;
+}
+
+/* Turag-style slim menubar scrollbar */
+.sidebar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #e85d3b transparent;
+}
+.sidebar-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: #e85d3b;
+  border-radius: 2px;
+}
+

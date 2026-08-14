@@ -1,0 +1,45 @@
+# Python
+**/__pycache__/
+**/*.py[cod]
+**/.venv/
+**/venv/
+**/*.sqlite3
+**/db.sqlite3
+**/hotel_erp.db
+**/staticfiles/
+**/uploads/
+backend/.env
+*.egg-info/
+.pytest_cache/
+
+# Node / Next
+**/node_modules/
+**/.next/
+**/out/
+**/.vercel/
+frontend/.env*.local
+frontend/.env.production.local
+*.tsbuildinfo
+
+# Logs / OS
+*.log
+*.pid
+.DS_Store
+Thumbs.db
+
+# Deploy runtime
+deploy/nginx-118.pid
+deploy/nginx-118.access.log
+deploy/nginx-118.error.log
+
+# IDE / Cursor
+.idea/
+.vscode/
+.cursor/
+*.swp
+
+# Local secrets
+.env
+.env.*
+!.env.example
+!backend/.env.example

@@ -1,0 +1,17 @@
+[Unit]
+Description=HotelERP Cloudflare proxy Nginx :118
+After=network-online.target hotelerp-frontend.service hotelerp-backend.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/sas/HotelERP
+ExecStart=/usr/sbin/nginx -c /home/sas/HotelERP/deploy/nginx-118.conf -g "daemon off;"
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+RestartSec=3
+StandardOutput=append:/home/sas/HotelERP/cf-proxy.log
+StandardError=append:/home/sas/HotelERP/cf-proxy.log
+
+[Install]
+WantedBy=default.target

@@ -450,6 +450,9 @@ def config_list(request, kind):
             return Response({'detail': str(exc)}, status=400)
         return Response(serialize_kind(kind, row), status=201)
     search = (request.query_params.get('search') or '').strip()
+    department = (request.query_params.get('department') or '').strip()
+    if kind == 'employees' and department:
+        qs = qs.filter(department__icontains=department)
     if search:
         if kind == 'employees':
             qs = qs.filter(
@@ -457,6 +460,9 @@ def config_list(request, kind):
                 | Q(last_name__icontains=search)
                 | Q(employee_number__icontains=search)
                 | Q(phone__icontains=search)
+                | Q(email__icontains=search)
+                | Q(department__icontains=search)
+                | Q(designation__icontains=search)
             )
         elif hasattr(qs.model, 'name'):
             qs = qs.filter(name__icontains=search)

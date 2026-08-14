@@ -32,10 +32,18 @@ export default function ConfigMasterPage({
   kind,
   catalog,
   endpoint = '/frontdesk/config',
+  queryParams,
+  defaults,
+  titleOverride,
+  subtitleOverride,
 }: {
   kind: string
   catalog?: Record<string, MasterDef>
   endpoint?: string
+  queryParams?: Record<string, string>
+  defaults?: Record<string, string | boolean>
+  titleOverride?: string
+  subtitleOverride?: string
 }) {
   const def = (catalog || FRONTDESK_MASTERS)[kind]
   const [items, setItems] = useState<any[]>([])
@@ -52,9 +60,19 @@ export default function ConfigMasterPage({
     [options]
   )
 
+  const withDefaults = (base: Record<string, string | boolean>) => ({
+    ...base,
+    ...(defaults || {}),
+  })
+
   const load = (term = search) => {
     const params = new URLSearchParams()
     if (term) params.set('search', term)
+    if (queryParams) {
+      Object.entries(queryParams).forEach(([key, value]) => {
+        if (value) params.set(key, value)
+      })
+    }
     const qs = params.toString()
     return apiClient
       .get(`${endpoint}/${kind}${qs ? `?${qs}` : ''}`)
@@ -68,10 +86,10 @@ export default function ConfigMasterPage({
 
   useEffect(() => {
     if (!def) return
-    setForm(emptyForm(def.fields))
+    setForm(withDefaults(emptyForm(def.fields)))
     setLoading(true)
     load('')
-  }, [kind, endpoint])
+  }, [kind, endpoint, JSON.stringify(queryParams || {}), JSON.stringify(defaults || {})])
 
   useEffect(() => {
     if (!def) return
@@ -92,7 +110,7 @@ export default function ConfigMasterPage({
 
   const reset = () => {
     setEditingId(null)
-    setForm(emptyForm(def.fields))
+    setForm(withDefaults(emptyForm(def.fields)))
     setError('')
   }
 
@@ -103,13 +121,13 @@ export default function ConfigMasterPage({
       if (field.type === 'checkbox') next[field.key] = Boolean(value)
       else next[field.key] = value === null || value === undefined ? '' : String(value)
     }
-    setForm(next)
+    setForm(withDefaults(next))
     setEditingId(row.id)
     setError('')
   }
 
   const payload = () => {
-    const body: Record<string, any> = {}
+    const body: Record<string, any> = { ...(defaults || {}) }
     for (const field of def.fields) {
       const value = form[field.key]
       if (field.type === 'checkbox') body[field.key] = Boolean(value)
@@ -231,8 +249,8 @@ export default function ConfigMasterPage({
         <main className="ml-64 flex-1 overflow-y-auto p-6">
           <div className="mb-6 flex items-start justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">{def.title}</h1>
-              <p className="mt-1 text-gray-600">{def.subtitle}</p>
+              <h1 className="text-3xl font-bold text-gray-900">{titleOverride || def.title}</h1>
+              <p className="mt-1 text-gray-600">{subtitleOverride || def.subtitle}</p>
             </div>
             <button
               type="button"

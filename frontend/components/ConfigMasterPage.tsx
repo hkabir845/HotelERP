@@ -36,6 +36,7 @@ export default function ConfigMasterPage({
   defaults,
   titleOverride,
   subtitleOverride,
+  allowCreate = true,
 }: {
   kind: string
   catalog?: Record<string, MasterDef>
@@ -44,6 +45,7 @@ export default function ConfigMasterPage({
   defaults?: Record<string, string | boolean>
   titleOverride?: string
   subtitleOverride?: string
+  allowCreate?: boolean
 }) {
   const def = (catalog || FRONTDESK_MASTERS)[kind]
   const [items, setItems] = useState<any[]>([])
@@ -139,6 +141,10 @@ export default function ConfigMasterPage({
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!allowCreate && !editingId) {
+      setError('Add employees from HR → Employees.')
+      return
+    }
     setSaving(true)
     setError('')
     try {
@@ -263,6 +269,7 @@ export default function ConfigMasterPage({
 
           {error && <p className="mb-4 text-red-600">{error}</p>}
 
+          {(allowCreate || editingId) && (
           <form
             onSubmit={submit}
             className="mb-6 grid gap-3 rounded-xl border border-gray-200 bg-white p-4 sm:grid-cols-2 lg:grid-cols-4"
@@ -291,6 +298,17 @@ export default function ConfigMasterPage({
               )}
             </div>
           </form>
+          )}
+
+          {!allowCreate && !editingId && (
+            <p className="mb-4 rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600">
+              Add employees from{' '}
+              <a href="/hr/employees" className="font-medium text-indigo-700 hover:underline">
+                HR → Employees
+              </a>{' '}
+              with department Housekeeping to list them here.
+            </p>
+          )}
 
           <div className="relative mb-4">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
@@ -324,7 +342,9 @@ export default function ConfigMasterPage({
                 ) : items.length === 0 ? (
                   <tr>
                     <td colSpan={def.columns.length + 1} className="px-4 py-10 text-center text-slate-500">
-                      No records yet. Add the first {def.title.toLowerCase()}.
+                      {allowCreate
+                        ? `No records yet. Add the first ${def.title.toLowerCase()}.`
+                        : 'No Housekeeping employees yet. Add them under HR → Employees.'}
                     </td>
                   </tr>
                 ) : (

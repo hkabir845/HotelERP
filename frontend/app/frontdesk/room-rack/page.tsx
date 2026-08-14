@@ -656,7 +656,10 @@ export default function RoomRackPage() {
                         <div className="flex gap-2 pt-2">
                           <button
                             type="button"
-                            onClick={() => router.push(`/frontdesk/reservations/${selectedRoom.current_reservation.id}`)}
+                            onClick={() => {
+                              const rid = selectedRoom.current_reservation?.id
+                              if (rid) router.push(`/frontdesk/reservations/${rid}`)
+                            }}
                             className="rounded-lg bg-indigo-600 px-4 py-2 text-sm text-white"
                           >
                             Open folio

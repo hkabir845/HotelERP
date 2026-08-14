@@ -101,7 +101,7 @@ export default function TuragLanding({
 
   return (
     <div
-      className={`${display.variable} ${sans.variable} min-h-screen overflow-x-hidden text-[#1c2e28] antialiased`}
+      className={`${display.variable} ${sans.variable} flex min-h-screen flex-col overflow-x-hidden text-[#1c2e28] antialiased`}
       style={{ fontFamily: 'var(--font-turag-sans), system-ui, sans-serif' }}
     >
       <style>{`
@@ -499,78 +499,20 @@ export default function TuragLanding({
         </div>
       </section>
 
-      {/* Contact / footer */}
-      <section id="contact" className="bg-[#0f241f] text-emerald-50">
-        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-5 sm:py-16 md:grid-cols-3">
-          <div className="md:col-span-1">
-            <span className="inline-flex rounded-2xl bg-[#f7f4ee] px-3 py-2 shadow-md">
-              <TuragLogo heightClass="h-20 sm:h-24" src={C.images.logo} />
-            </span>
-            <p className="mt-3 text-sm text-emerald-100/70">{C.tagline}</p>
-            <a
-              href={C.contact.facebook}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-3 inline-block text-sm text-[#c4a35a] hover:underline"
-            >
-              {C.copy.facebook}
-            </a>
-            <div className="mt-6 flex flex-wrap gap-2">
-              {book && (
-                <Link
-                  href={`${basePath}/book`}
-                  className="inline-flex min-h-[44px] items-center rounded-full bg-[#c4a35a] px-4 py-2 text-sm font-medium text-[#1c2e28]"
-                >
-                  {C.copy.ctaBook}
-                </Link>
-              )}
-              {order && (
-                <Link
-                  href={`${basePath}/order`}
-                  className="inline-flex min-h-[44px] items-center rounded-full border border-white/25 px-4 py-2 text-sm"
-                >
-                  {C.copy.ctaOrder}
-                </Link>
-              )}
-              <Link href={`/login?site=${subdomain}`} className="inline-flex min-h-[44px] items-center rounded-full px-4 py-2 text-sm text-emerald-100/60 hover:text-white">
-                {C.copy.staffLogin}
-              </Link>
-            </div>
-          </div>
-          <div>
-            <p className="text-xs uppercase tracking-[0.22em] text-emerald-200/60">Information</p>
-            <p className="mt-3 text-sm leading-relaxed text-emerald-50/85">{C.contact.resortAddress}</p>
-            <p className="mt-2 text-sm leading-relaxed text-emerald-50/70">{C.contact.dhakaOffice}</p>
-            <div className="mt-4 space-y-1 text-sm">
-              {C.contact.emails.map((e) => (
-                <a key={e} href={`mailto:${e}`} className="block hover:text-[#c4a35a]">
-                  {e}
-                </a>
-              ))}
-            </div>
-          </div>
-          <div>
-            <p className="text-xs uppercase tracking-[0.22em] text-emerald-200/60">Call us</p>
-            <div className="mt-3 space-y-1 text-sm">
-              {C.contact.phones.map((p) => (
-                <a key={p} href={`tel:${p.replace(/\s/g, '')}`} className="block hover:text-[#c4a35a]">
-                  {p}
-                </a>
-              ))}
-            </div>
-            <p className="mt-6 text-xs uppercase tracking-[0.22em] text-emerald-200/60">Quick links</p>
-            <div className="mt-2 flex flex-wrap gap-3 text-sm">
-              {C.nav.map((n) => (
-                <a key={n.id} href={`#${n.id}`} className="text-emerald-50/80 hover:text-white">
-                  {n.label}
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="mx-auto max-w-6xl px-4 pb-12 sm:px-5">
-          <form onSubmit={submitContact} className="grid gap-3 rounded-lg border border-white/10 bg-white/5 p-5 md:grid-cols-2">
-            <p className="md:col-span-2 text-sm font-medium text-white">{C.copy.contactFormTitle}</p>
+      {/* Contact form (above footer) */}
+      <section id="contact" className="bg-[#16352d] text-emerald-50">
+        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-5 sm:py-16">
+          <p className="text-xs uppercase tracking-[0.28em] text-emerald-200/70">Get in touch</p>
+          <h2
+            className="mt-2 text-3xl font-semibold sm:text-4xl"
+            style={{ fontFamily: 'var(--font-turag-display), serif' }}
+          >
+            {C.copy.contactFormTitle}
+          </h2>
+          <form
+            onSubmit={submitContact}
+            className="mt-8 grid gap-3 rounded-lg border border-white/10 bg-white/5 p-5 md:grid-cols-2"
+          >
             <input
               required
               placeholder="Name"
@@ -610,11 +552,95 @@ export default function TuragLanding({
             </div>
           </form>
         </div>
-        <div className="border-t border-white/10 px-5 py-5 text-center text-xs text-emerald-100/40">
-          © {new Date().getFullYear()} {C.brand}. {C.copy.footerNote} · Guest portal for{' '}
-          {subdomain}
-        </div>
       </section>
+
+      {/* Site footer — always at the bottom */}
+      <footer className="mt-auto bg-[#0b1a14] text-white">
+        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-5 sm:py-14 md:grid-cols-3 md:gap-12">
+          <div>
+            <span className="inline-flex rounded-2xl bg-white px-3 py-2 shadow-md">
+              <TuragLogo heightClass="h-20 sm:h-24" src={C.images.logo} />
+            </span>
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/90">{C.tagline}</p>
+            <a
+              href={C.contact.facebook}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-3 inline-block text-sm font-medium text-[#c4a35a] hover:underline"
+            >
+              {C.copy.facebook}
+            </a>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              {book && (
+                <Link
+                  href={`${basePath}/book`}
+                  className="inline-flex min-h-[44px] items-center rounded-full bg-[#c4a35a] px-5 py-2 text-sm font-medium text-[#1c2e28]"
+                >
+                  {C.copy.ctaBook}
+                </Link>
+              )}
+              {order && (
+                <Link
+                  href={`${basePath}/order`}
+                  className="inline-flex min-h-[44px] items-center rounded-full border border-white/35 px-5 py-2 text-sm text-white"
+                >
+                  {C.copy.ctaOrder}
+                </Link>
+              )}
+              <Link
+                href={`/login?site=${subdomain}`}
+                className="inline-flex min-h-[44px] items-center text-sm text-white/55 hover:text-white"
+              >
+                {C.copy.staffLogin}
+              </Link>
+            </div>
+          </div>
+
+          <div>
+            <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-emerald-200/55">
+              Information
+            </p>
+            <p className="mt-4 text-sm leading-relaxed text-white/90">{C.contact.resortAddress}</p>
+            <p className="mt-3 text-sm leading-relaxed text-white/80">{C.contact.dhakaOffice}</p>
+            <div className="mt-5 space-y-2 text-sm">
+              {C.contact.emails.map((e) => (
+                <a key={e} href={`mailto:${e}`} className="block text-sky-300/90 hover:text-[#c4a35a]">
+                  {e}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-emerald-200/55">
+              Call us
+            </p>
+            <div className="mt-4 space-y-1.5 text-sm text-white/90">
+              {C.contact.phones.map((p) => (
+                <a key={p} href={`tel:${p.replace(/\s/g, '')}`} className="block hover:text-[#c4a35a]">
+                  {p}
+                </a>
+              ))}
+            </div>
+            <p className="mt-8 text-[11px] font-medium uppercase tracking-[0.22em] text-emerald-200/55">
+              Quick links
+            </p>
+            <nav
+              aria-label="Footer"
+              className="mt-3 flex max-w-sm flex-wrap gap-x-4 gap-y-2 text-sm text-white/85"
+            >
+              {C.nav.map((n) => (
+                <a key={n.id} href={`#${n.id}`} className="hover:text-white">
+                  {n.label}
+                </a>
+              ))}
+            </nav>
+          </div>
+        </div>
+        <div className="border-t border-white/10 px-4 py-5 text-center text-xs text-white/40 sm:px-5">
+          © {new Date().getFullYear()} {C.brand}. {C.copy.footerNote}
+        </div>
+      </footer>
     </div>
   )
 }
